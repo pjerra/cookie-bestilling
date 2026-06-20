@@ -1,5 +1,5 @@
 /**
- * Søte Saker – cookie-bestilling backend (Google Apps Script)
+ * Milla's Chunky Cookies – cookie-bestilling backend (Google Apps Script)
  * =========================================================================
  * Gir nettsiden delt status (åpen/stengt), automatisk utsolgt-grense,
  * bestillingslagring, venteliste og bildegalleri – alt styrt fra regnearket
@@ -250,7 +250,7 @@ function settUppRegneark() {
   // --- Innhold (all tekst på siden) ---
   const innhold = ensureSheet(ss, ARK.innhold, ['Nøkkel', 'Verdi']);
   seedKeyValues(innhold, [
-    ['firmanavn', 'Søte Saker'],
+    ['firmanavn', "Milla's Chunky Cookies"],
     ['slagord', 'Ferske, hjemmebakte cookies – bakt med kjærlighet, i små partier.'],
     ['produkt_beskrivelse', 'Hver cookie er bakt for hånd hjemme, i små partier, med gode råvarer og mye kjærlighet. Vi baker bare et begrenset antall om gangen – derfor selges det ofte ut. Sikre deg dine mens du kan!'],
     ['direktesalg_tekst', 'Vi har ferske cookies klare for direktesalg. Først til mølla!'],
@@ -262,7 +262,7 @@ function settUppRegneark() {
   // --- Venteliste ---
   ensureSheet(ss, ARK.venteliste, ['Tidspunkt', 'Navn', 'Kontakt']);
 
-  SpreadsheetApp.getActiveSpreadsheet().toast('Oppsett ferdig! Fanene er klare.', 'Søte Saker', 5);
+  SpreadsheetApp.getActiveSpreadsheet().toast('Oppsett ferdig! Fanene er klare.', "Milla's Chunky Cookies", 5);
 }
 
 function ensureSheet(ss, name, headers) {

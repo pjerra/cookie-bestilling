@@ -1,4 +1,4 @@
-# 🍪 Søte Saker – cookie-bestilling
+# 🍪 Milla's Chunky Cookies – cookie-bestilling
 
 En enkel, pen nettside for å selge hjemmebakte cookies på bestilling.
 Hovedpoenget: **du åpner for bestilling, og siden stenger seg selv automatisk når
@@ -32,7 +32,7 @@ Google Apps Script (Code.gs)  ──►  Google-regneark (Innstillinger, Innhold
 ## Del 1 – Oppsett (gjøres én gang)
 
 ### A. Lag regnearket
-1. Gå til [sheets.new](https://sheets.new) og lag et nytt regneark. Kall det f.eks. «Søte Saker».
+1. Gå til [sheets.new](https://sheets.new) og lag et nytt regneark. Kall det f.eks. «Milla's Chunky Cookies».
 
 ### B. Lag bildemappen i Google Drive
 1. I [Google Drive](https://drive.google.com): **Ny → Mappe**, kall den f.eks. «Cookie-bilder».
