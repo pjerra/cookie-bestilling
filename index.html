@@ -190,6 +190,9 @@
   footer .info{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin:1rem 0;font-weight:600;}
   footer a{color:#ffd9c2;}
   footer .made{opacity:.7;font-size:.9rem;margin-top:1rem;}
+  .fb-btn{display:inline-flex;align-items:center;gap:.5em;background:#1877F2;color:#fff !important;font-weight:800;padding:.7em 1.3em;border-radius:999px;text-decoration:none;margin:.2rem 0 .4rem;box-shadow:var(--shadow-sm);transition:transform .12s ease;}
+  .fb-btn:hover{transform:translateY(-2px);}
+  .fb-btn svg{width:20px;height:20px;fill:currentColor;}
 
   /* ---------- Reveal animation ---------- */
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .6s ease;}
@@ -289,6 +292,7 @@
         <button class="btn brown" type="submit" id="waitSubmit">Sett meg på ventelisten</button>
       </form>
       <div id="waitMsg"></div>
+      <p class="form-note" style="margin-top:1rem;">Eller <a class="js-fb" href="https://www.facebook.com/share/18V1gV2x8j/" target="_blank" rel="noopener">følg oss på Facebook</a> – der legger vi ut når vi åpner og baker nye partier. 💙</p>
     </div>
 
     <!-- DIREKTESALG -->
@@ -335,6 +339,10 @@
       <span id="footHenting">🛍️ Henting etter avtale</span>
       <span id="footVipps">💳 Betaling med Vipps</span>
     </div>
+    <a class="fb-btn js-fb" href="https://www.facebook.com/share/18V1gV2x8j/" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
+      Følg oss på Facebook
+    </a>
     <p class="made">Bakt med 🤍 · Laget for cookie-elskere</p>
   </div>
 </footer>
@@ -365,6 +373,7 @@ const DEMO = {
     firmanavn: "Milla's Chunky Cookies",
     slagord: "Ferske, hjemmebakte cookies – bakt med kjærlighet, i små partier.",
     produkt_beskrivelse: "Hver cookie er bakt for hånd hjemme, i små partier, med gode råvarer og mye kjærlighet. Vi baker bare et begrenset antall om gangen – derfor selges det ofte ut. Sikre deg dine mens du kan!",
+    facebook_url: "https://www.facebook.com/share/18V1gV2x8j/",
   },
   _demoImages: [
     "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80",
@@ -433,6 +442,14 @@ function applyContent(s) {
 
   if (s.hentested) $("footHenting").textContent = "🛍️ " + s.hentested;
   if (s.vipps) $("footVipps").textContent = "💳 Vipps " + s.vipps;
+
+  // Facebook-lenke (redigerbar i Innhold-fanen)
+  if (c.facebook_url !== undefined) {
+    document.querySelectorAll(".js-fb").forEach(function (a) {
+      if (c.facebook_url) { a.href = c.facebook_url; a.style.display = ""; }
+      else { a.style.display = "none"; }
+    });
+  }
 }
 
 function renderStatus(s) {

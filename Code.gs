@@ -254,6 +254,7 @@ function settUppRegneark() {
     ['slagord', 'Ferske, hjemmebakte cookies – bakt med kjærlighet, i små partier.'],
     ['produkt_beskrivelse', 'Hver cookie er bakt for hånd hjemme, i små partier, med gode råvarer og mye kjærlighet. Vi baker bare et begrenset antall om gangen – derfor selges det ofte ut. Sikre deg dine mens du kan!'],
     ['direktesalg_tekst', 'Vi har ferske cookies klare for direktesalg. Først til mølla!'],
+    ['facebook_url', 'https://www.facebook.com/share/18V1gV2x8j/'],
   ]);
 
   // --- Bestillinger ---

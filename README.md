@@ -110,7 +110,8 @@ noe. Vil du ta imot flere, øk `maks_pakker`.
 **Innstillinger**.
 
 ### Endre tekst på siden
-Fanen **Innhold**: `firmanavn`, `slagord`, `produkt_beskrivelse`, `direktesalg_tekst`.
+Fanen **Innhold**: `firmanavn`, `slagord`, `produkt_beskrivelse`, `direktesalg_tekst`,
+`facebook_url` (lenke til Facebook-siden – vises som knapp i bunnen og på venteliste-visningen).
 
 ### Bytte bilder 📸
 Dra nye bilder inn i **Drive-bildemappen** (eller slett gamle). De vises i galleriet
