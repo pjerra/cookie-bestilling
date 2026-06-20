@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Søte Saker – Hjemmebakte cookies</title>
+<meta name="description" content="Ferske, hjemmebakte cookies på bestilling. 2 cookies for 149 kr. Bestill mens det er åpent – det selges fort ut!" />
+
+<!-- Open Graph / sosiale medier-forhåndsvisning -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Søte Saker – Hjemmebakte cookies" />
+<meta property="og:description" content="Ferske, hjemmebakte cookies på bestilling. 2 cookies for 149 kr. Bestill mens det er åpent!" />
+<meta property="og:image" content="og-image.jpg" />
+<meta property="og:locale" content="nb_NO" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Favicon: cookie-emoji -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --cream:#FBF5EC;
+    --cream-2:#F4E9D8;
+    --card:#FFFFFF;
+    --brown:#4A3325;
+    --brown-soft:#7A604E;
+    --caramel:#C98A5E;
+    --caramel-dark:#A86A41;
+    --accent:#E5566D;
+    --accent-dark:#cf3f57;
+    --green:#3FA34D;
+    --red:#D14D4D;
+    --blue:#3E7CB1;
+    --shadow:0 10px 30px rgba(74,51,37,.12);
+    --shadow-sm:0 4px 14px rgba(74,51,37,.10);
+    --radius:22px;
+    --radius-sm:14px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Nunito',system-ui,-apple-system,sans-serif;
+    color:var(--brown);
+    background:var(--cream);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{line-height:1.15;margin:0 0 .4em;}
+  p{margin:0 0 1em;}
+  a{color:var(--accent-dark);}
+  img{max-width:100%;display:block;}
+
+  .wrap{width:min(960px,92%);margin-inline:auto;}
+
+  /* ---------- Sticky header ---------- */
+  header.bar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,245,236,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(74,51,37,.08);
+  }
+  .bar-inner{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;}
+  .logo{font-family:'Pacifico',cursive;font-size:1.5rem;color:var(--caramel-dark);}
+  .logo .dot{color:var(--accent);}
+  .btn{
+    display:inline-flex;align-items:center;gap:.5em;
+    border:none;cursor:pointer;
+    font-family:inherit;font-weight:800;font-size:1rem;
+    padding:.8em 1.4em;border-radius:999px;
+    background:var(--accent);color:#fff;
+    box-shadow:var(--shadow-sm);
+    transition:transform .12s ease, box-shadow .12s ease, background .2s ease;
+    text-decoration:none;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(229,86,109,.35);}
+  .btn:active{transform:translateY(0) scale(.98);}
+  .btn.small{padding:.55em 1.05em;font-size:.95rem;}
+  .btn.ghost{background:#fff;color:var(--accent-dark);box-shadow:inset 0 0 0 2px var(--accent);}
+  .btn.brown{background:var(--caramel-dark);}
+  .btn.brown:hover{box-shadow:0 8px 20px rgba(168,106,65,.35);}
+  .btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;min-height:78vh;display:flex;align-items:flex-end;
+    color:#fff;overflow:hidden;
+    background:linear-gradient(135deg,#caa06f,#8a5a3a);
+  }
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(to top,rgba(40,24,14,.82) 0%,rgba(40,24,14,.30) 45%,rgba(40,24,14,.15) 100%);
+  }
+  .hero-content{position:relative;z-index:2;padding:3rem 0 2.6rem;width:min(960px,92%);margin-inline:auto;}
+  .hero h1{font-family:'Pacifico',cursive;font-weight:400;font-size:clamp(2.6rem,8vw,4.6rem);text-shadow:0 3px 18px rgba(0,0,0,.35);margin-bottom:.2em;}
+  .hero .tagline{font-size:clamp(1.05rem,3.6vw,1.5rem);font-weight:700;max-width:30ch;text-shadow:0 2px 10px rgba(0,0,0,.4);}
+  .hero .price-pill{
+    display:inline-flex;align-items:center;gap:.5em;margin:.4rem 0 1.3rem;
+    background:rgba(255,255,255,.95);color:var(--brown);
+    font-weight:900;padding:.5em 1.1em;border-radius:999px;box-shadow:var(--shadow-sm);
+  }
+  .hero-cta{display:flex;gap:.7rem;flex-wrap:wrap;}
+
+  /* ---------- Status banner ---------- */
+  .status-wrap{margin-top:-2.2rem;position:relative;z-index:5;}
+  .status{
+    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:1.5rem 1.6rem;display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap;
+    border-left:10px solid var(--caramel);
+  }
+  .status .dot{
+    width:16px;height:16px;border-radius:50%;background:var(--caramel);flex:0 0 auto;
+    box-shadow:0 0 0 0 rgba(63,163,77,.5);
+  }
+  .status.open{border-left-color:var(--green);}
+  .status.open .dot{background:var(--green);animation:pulse 1.8s infinite;}
+  .status.closed{border-left-color:var(--red);}
+  .status.closed .dot{background:var(--red);}
+  .status.live{border-left-color:var(--blue);}
+  .status.live .dot{background:var(--blue);animation:pulse 1.4s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(63,163,77,.45);}70%{box-shadow:0 0 0 14px rgba(63,163,77,0);}100%{box-shadow:0 0 0 0 rgba(63,163,77,0);}}
+  .status-text{flex:1 1 220px;}
+  .status-text .label{text-transform:uppercase;letter-spacing:.08em;font-weight:900;font-size:.82rem;color:var(--brown-soft);}
+  .status-text .headline{font-size:1.5rem;font-weight:900;margin:.05em 0;}
+  .status-text .sub{color:var(--brown-soft);font-weight:600;}
+  .remaining-big{font-size:1.5rem;color:var(--green);}
+
+  /* ---------- Sections ---------- */
+  section{padding:3.2rem 0;}
+  .section-title{font-family:'Nunito';font-weight:900;font-size:clamp(1.6rem,5vw,2.2rem);text-align:center;color:var(--brown);}
+  .section-title::after{content:"";display:block;width:64px;height:5px;border-radius:3px;background:var(--accent);margin:.5rem auto 0;}
+  .lead{text-align:center;max-width:54ch;margin:0 auto 2rem;color:var(--brown-soft);font-weight:600;font-size:1.08rem;}
+
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.8rem;}
+
+  /* ---------- Forms ---------- */
+  form{display:grid;gap:1rem;}
+  .field{display:grid;gap:.35rem;}
+  label{font-weight:800;font-size:.95rem;}
+  input,textarea,select{
+    font-family:inherit;font-size:1.05rem;color:var(--brown);
+    padding:.85em 1em;border:2px solid var(--cream-2);border-radius:var(--radius-sm);
+    background:#fff;transition:border-color .15s ease, box-shadow .15s ease;width:100%;
+  }
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--caramel);box-shadow:0 0 0 4px rgba(201,138,94,.18);}
+  .qty-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+  .stepper{display:flex;align-items:center;gap:.4rem;}
+  .stepper button{width:46px;height:46px;border-radius:50%;border:2px solid var(--caramel);background:#fff;color:var(--caramel-dark);font-size:1.5rem;font-weight:900;cursor:pointer;line-height:1;transition:transform .1s ease;}
+  .stepper button:active{transform:scale(.9);}
+  .stepper input{width:72px;text-align:center;font-weight:900;font-size:1.2rem;}
+  .total{margin-left:auto;font-weight:900;font-size:1.25rem;}
+  .total span{color:var(--accent-dark);}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .form-note{font-size:.9rem;color:var(--brown-soft);}
+
+  .msg{border-radius:var(--radius-sm);padding:1rem 1.2rem;font-weight:700;}
+  .msg.ok{background:#e7f6e9;color:#216b2c;border:2px solid #bfe6c6;}
+  .msg.err{background:#fdeaea;color:#9b2c2c;border:2px solid #f3c7c7;}
+
+  /* ---------- Confirmation / success ---------- */
+  .success{text-align:center;}
+  .success .check{font-size:3.4rem;animation:pop .5s ease;}
+  @keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.25);}100%{transform:scale(1);}}
+  .vipps-box{background:var(--cream);border:2px dashed var(--caramel);border-radius:var(--radius-sm);padding:1.1rem;margin:1rem 0;font-weight:800;}
+  .vipps-box .amount{font-size:1.6rem;color:var(--accent-dark);}
+
+  /* ---------- Gallery ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1rem;}
+  .gallery figure{margin:0;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm);background:var(--cream-2);aspect-ratio:1;position:relative;}
+  .gallery img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+  .gallery figure:hover img{transform:scale(1.07);}
+  .gallery figcaption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(40,24,14,.8));color:#fff;font-weight:700;font-size:.9rem;padding:1.4rem .8rem .6rem;}
+
+  /* ---------- About ---------- */
+  .about{display:grid;gap:1.5rem;grid-template-columns:1fr;align-items:center;}
+  @media(min-width:720px){.about{grid-template-columns:1.1fr .9fr;}}
+  .about .photo{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3;background:var(--cream-2);}
+  .about .photo img{width:100%;height:100%;object-fit:cover;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--brown);color:#f3e3d5;padding:2.6rem 0;text-align:center;}
+  footer .logo{color:#fff;}
+  footer .info{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin:1rem 0;font-weight:600;}
+  footer a{color:#ffd9c2;}
+  footer .made{opacity:.7;font-size:.9rem;margin-top:1rem;}
+
+  /* ---------- Reveal animation ---------- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+
+<!-- ======================= HEADER ======================= -->
+<header class="bar">
+  <div class="wrap bar-inner">
+    <div class="logo" id="logoName">Søte Saker<span class="dot">.</span></div>
+    <a href="#handling" class="btn small">Bestill 🍪</a>
+  </div>
+</header>
+
+<!-- ======================= HERO ======================= -->
+<div class="hero">
+  <img class="hero-img" id="heroImg" alt="" />
+  <div class="hero-content">
+    <h1 id="heroName">Søte Saker</h1>
+    <p class="tagline" id="heroTagline">Ferske, hjemmebakte cookies – bakt med kjærlighet, i små partier.</p>
+    <div class="price-pill">🍪 2 cookies for <span id="heroPrice">149</span> kr</div>
+    <div class="hero-cta">
+      <a href="#handling" class="btn">Bestill nå</a>
+      <a href="#galleri" class="btn ghost">Se cookiesene</a>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= STATUS + HANDLING ======================= -->
+<div class="wrap status-wrap" id="handling">
+  <div class="status" id="statusBanner">
+    <div class="dot"></div>
+    <div class="status-text">
+      <div class="label" id="statusLabel">Henter status …</div>
+      <div class="headline" id="statusHeadline">Et øyeblikk</div>
+      <div class="sub" id="statusSub"></div>
+    </div>
+  </div>
+</div>
+
+<section style="padding-top:2rem;">
+  <div class="wrap">
+
+    <!-- ORDER FORM -->
+    <div class="card reveal" id="orderCard">
+      <h2 class="section-title" style="text-align:left;">Bestill cookies</h2>
+      <p class="lead" style="text-align:left;margin-left:0;">Fyll ut under, så er bestillingen din reservert. Du betaler med Vipps ved henting.</p>
+      <form id="orderForm">
+        <div class="field">
+          <label for="o-navn">Navn</label>
+          <input id="o-navn" name="navn" type="text" required autocomplete="name" placeholder="Ditt navn" />
+        </div>
+        <div class="field">
+          <label for="o-tlf">Telefon</label>
+          <input id="o-tlf" name="telefon" type="tel" required autocomplete="tel" placeholder="Mobilnummer (for henting/Vipps)" />
+        </div>
+        <div class="field">
+          <label for="o-antall">Antall pakker (2 cookies pr. pakke)</label>
+          <div class="qty-row">
+            <div class="stepper">
+              <button type="button" id="minus" aria-label="Færre">−</button>
+              <input id="o-antall" name="antall" type="number" min="1" value="1" inputmode="numeric" />
+              <button type="button" id="plus" aria-label="Flere">+</button>
+            </div>
+            <div class="total">Totalt: <span id="totalKr">149</span> kr</div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="o-kommentar">Kommentar (valgfritt)</label>
+          <textarea id="o-kommentar" name="kommentar" rows="2" placeholder="Allergier, ønsker, henteønske …"></textarea>
+        </div>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button class="btn" type="submit" id="orderSubmit">Send bestilling 🍪</button>
+        <div class="form-note">Du forplikter deg ikke til noe før du henter. Vi tar kontakt om noe er uklart.</div>
+      </form>
+      <div id="orderMsg"></div>
+    </div>
+
+    <!-- WAITLIST -->
+    <div class="card reveal hidden" id="waitlistCard">
+      <h2 class="section-title" style="text-align:left;">Bli varslet 🔔</h2>
+      <p class="lead" style="text-align:left;margin-left:0;">Bestillingen er stengt akkurat nå – det selges fort ut! Sett deg på ventelisten, så gir vi deg beskjed med en gang vi åpner igjen.</p>
+      <form id="waitlistForm">
+        <div class="field">
+          <label for="w-navn">Navn</label>
+          <input id="w-navn" name="navn" type="text" required placeholder="Ditt navn" />
+        </div>
+        <div class="field">
+          <label for="w-kontakt">E-post eller telefon</label>
+          <input id="w-kontakt" name="kontakt" type="text" required placeholder="Så vi kan varsle deg" />
+        </div>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button class="btn brown" type="submit" id="waitSubmit">Sett meg på ventelisten</button>
+      </form>
+      <div id="waitMsg"></div>
+    </div>
+
+    <!-- DIREKTESALG -->
+    <div class="card reveal hidden" id="liveCard">
+      <h2 class="section-title" style="text-align:left;">Kom og kjøp nå! 🎉</h2>
+      <p class="lead" style="text-align:left;margin-left:0;" id="liveText">Vi har ferske cookies klare for direktesalg. Først til mølla!</p>
+      <div class="vipps-box">
+        📍 <span id="liveSted">Hentested oppgis her</span><br />
+        🕒 <span id="liveTid">Tidspunkt oppgis her</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================= OM ======================= -->
+<section style="background:var(--cream-2);">
+  <div class="wrap">
+    <div class="about">
+      <div>
+        <h2 class="section-title" style="text-align:left;">Om cookiesene</h2>
+        <p id="aboutText">Hver cookie er bakt for hånd hjemme, i små partier, med gode råvarer og mye kjærlighet. Vi baker bare et begrenset antall om gangen – derfor selges det ofte ut. Sikre deg dine mens du kan!</p>
+        <p style="font-weight:800;color:var(--caramel-dark);">🍪 2 cookies for <span class="aboutPrice">149</span> kr • hjemmebakt • ferskt parti hver gang</p>
+      </div>
+      <div class="photo"><img id="aboutImg" alt="Hjemmebakte cookies" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= GALLERI ======================= -->
+<section id="galleri">
+  <div class="wrap">
+    <h2 class="section-title reveal">Friste litt? 😋</h2>
+    <p class="lead reveal">Et lite utvalg fra de siste partiene.</p>
+    <div class="gallery reveal" id="gallery"></div>
+  </div>
+</section>
+
+<!-- ======================= FOOTER ======================= -->
+<footer>
+  <div class="wrap">
+    <div class="logo" id="footerName">Søte Saker<span style="color:var(--accent);">.</span></div>
+    <div class="info">
+      <span id="footHenting">🛍️ Henting etter avtale</span>
+      <span id="footVipps">💳 Betaling med Vipps</span>
+    </div>
+    <p class="made">Bakt med 🤍 · Laget for cookie-elskere</p>
+  </div>
+</footer>
+
+<script>
+/* =================================================================
+   KONFIGURASJON
+   -----------------------------------------------------------------
+   Lim inn web-app-URL-en fra Google Apps Script mellom anførselstegnene.
+   La den stå tom for å se nettsiden i demo-modus (med eksempelinnhold).
+   ================================================================= */
+const CONFIG = {
+  APPS_SCRIPT_URL: "",            // <-- LIM INN URL HER etter at Apps Script er publisert
+  PRIS_PER_PAKKE: 149,            // brukes som fallback hvis backend ikke svarer
+};
+
+/* ---- Demo-innhold (vises når backend ikke er koblet til) ---- */
+const DEMO = {
+  status: "BESTILLING_ÅPEN",
+  capacity: 60,
+  remaining: 23,
+  pris: 149,
+  neste_batch: "Neste parti: lørdag",
+  vipps: "123 45 678",
+  hentested: "Storgata 1, etter avtale",
+  hentetid: "Lør 12–14",
+  innhold: {
+    firmanavn: "Søte Saker",
+    slagord: "Ferske, hjemmebakte cookies – bakt med kjærlighet, i små partier.",
+    produkt_beskrivelse: "Hver cookie er bakt for hånd hjemme, i små partier, med gode råvarer og mye kjærlighet. Vi baker bare et begrenset antall om gangen – derfor selges det ofte ut. Sikre deg dine mens du kan!",
+  },
+  _demoImages: [
+    "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80",
+    "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80",
+    "https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80",
+    "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600&q=80",
+  ],
+};
+
+const $ = (id) => document.getElementById(id);
+let STATE = null;
+
+/* ================= Datahenting ================= */
+async function getJSON(params) {
+  const url = CONFIG.APPS_SCRIPT_URL + (params ? "?" + params : "");
+  const res = await fetch(url, { method: "GET" });
+  return res.json();
+}
+
+async function postAction(payload) {
+  // text/plain unngår CORS-preflight mot Apps Script
+  const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload),
+  });
+  return res.json();
+}
+
+async function loadStatus() {
+  if (!CONFIG.APPS_SCRIPT_URL) return { ...DEMO, _demo: true };
+  try {
+    return await getJSON("");
+  } catch (e) {
+    console.warn("Kunne ikke hente status, viser demo:", e);
+    return { ...DEMO, _demo: true };
+  }
+}
+
+async function loadImages() {
+  if (!CONFIG.APPS_SCRIPT_URL) return DEMO._demoImages.map((u) => ({ url: u, caption: "" }));
+  try {
+    const data = await getJSON("action=images");
+    return Array.isArray(data) ? data : (data.images || []);
+  } catch (e) {
+    return [];
+  }
+}
+
+/* ================= Rendering ================= */
+function applyContent(s) {
+  const c = s.innhold || {};
+  const pris = s.pris || CONFIG.PRIS_PER_PAKKE;
+  CONFIG.PRIS_PER_PAKKE = pris;
+
+  if (c.firmanavn) {
+    $("logoName").innerHTML = c.firmanavn + '<span class="dot">.</span>';
+    $("heroName").textContent = c.firmanavn;
+    $("footerName").innerHTML = c.firmanavn + '<span style="color:var(--accent);">.</span>';
+    document.title = c.firmanavn + " – Hjemmebakte cookies";
+  }
+  if (c.slagord) $("heroTagline").textContent = c.slagord;
+  if (c.produkt_beskrivelse) $("aboutText").textContent = c.produkt_beskrivelse;
+  $("heroPrice").textContent = pris;
+  document.querySelectorAll(".aboutPrice").forEach((el) => (el.textContent = pris));
+
+  if (s.hentested) $("footHenting").textContent = "🛍️ " + s.hentested;
+  if (s.vipps) $("footVipps").textContent = "💳 Vipps " + s.vipps;
+}
+
+function renderStatus(s) {
+  const banner = $("statusBanner");
+  const remaining = s.remaining ?? null;
+  const soldOut = s.status === "UTSOLGT" || (remaining !== null && remaining <= 0);
+
+  // skjul alle handlingskort
+  $("orderCard").classList.add("hidden");
+  $("waitlistCard").classList.add("hidden");
+  $("liveCard").classList.add("hidden");
+  banner.className = "status";
+
+  if (s.status === "BESTILLING_ÅPEN" && !soldOut) {
+    banner.classList.add("open");
+    $("statusLabel").textContent = "Bestilling åpen";
+    $("statusHeadline").innerHTML = remaining !== null
+      ? `Kun <span class="remaining-big">${remaining}</span> pakker igjen!`
+      : "Åpent for bestilling nå!";
+    $("statusSub").textContent = "Bestill før det blir utsolgt 👇";
+    $("orderCard").classList.remove("hidden");
+    setupOrderMax(remaining);
+  } else if (s.status === "DIREKTESALG") {
+    banner.classList.add("live");
+    $("statusLabel").textContent = "Direktesalg";
+    $("statusHeadline").textContent = "Kom og kjøp nå! 🎉";
+    $("statusSub").textContent = s.neste_batch || "Først til mølla – det selges fort ut!";
+    $("liveCard").classList.remove("hidden");
+    $("liveSted").textContent = s.hentested || "Hentested oppgis her";
+    $("liveTid").textContent = s.hentetid || "Akkurat nå";
+    if (s.innhold && s.innhold.direktesalg_tekst) $("liveText").textContent = s.innhold.direktesalg_tekst;
+  } else {
+    // STENGT eller UTSOLGT
+    banner.classList.add("closed");
+    $("statusLabel").textContent = soldOut ? "Utsolgt" : "Bestilling stengt";
+    $("statusHeadline").textContent = soldOut ? "Alt er utsolgt 😢" : "Stengt akkurat nå";
+    $("statusSub").textContent = s.neste_batch ? s.neste_batch : "Sett deg på ventelisten – vi åpner snart igjen!";
+    $("waitlistCard").classList.remove("hidden");
+  }
+}
+
+function renderGallery(images) {
+  const g = $("gallery");
+  if (!images || !images.length) {
+    document.getElementById("galleri").classList.add("hidden");
+    return;
+  }
+  g.innerHTML = "";
+  images.forEach((img, i) => {
+    const fig = document.createElement("figure");
+    const im = document.createElement("img");
+    im.loading = "lazy";
+    im.src = img.url;
+    im.alt = img.caption || "Hjemmebakt cookie";
+    fig.appendChild(im);
+    if (img.caption) {
+      const cap = document.createElement("figcaption");
+      cap.textContent = img.caption;
+      fig.appendChild(cap);
+    }
+    g.appendChild(fig);
+    if (i === 0) {
+      $("heroImg").src = img.url;
+      $("aboutImg").src = images[Math.min(1, images.length - 1)].url;
+    }
+  });
+}
+
+/* ================= Bestillingsskjema ================= */
+function setupOrderMax(remaining) {
+  const inp = $("o-antall");
+  if (remaining && remaining > 0) inp.max = remaining;
+  if (parseInt(inp.value) > (remaining || Infinity)) inp.value = remaining;
+  updateTotal();
+}
+
+function updateTotal() {
+  const n = Math.max(1, parseInt($("o-antall").value) || 1);
+  $("totalKr").textContent = n * CONFIG.PRIS_PER_PAKKE;
+}
+
+function clampQty() {
+  const inp = $("o-antall");
+  let n = parseInt(inp.value) || 1;
+  const max = parseInt(inp.max) || Infinity;
+  if (n < 1) n = 1;
+  if (n > max) n = max;
+  inp.value = n;
+  updateTotal();
+}
+
+$("plus").addEventListener("click", () => { $("o-antall").value = (parseInt($("o-antall").value) || 0) + 1; clampQty(); });
+$("minus").addEventListener("click", () => { $("o-antall").value = (parseInt($("o-antall").value) || 2) - 1; clampQty(); });
+$("o-antall").addEventListener("input", clampQty);
+
+$("orderForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if ($("orderForm").website.value) return; // honeypot
+  const btn = $("orderSubmit");
+  const msg = $("orderMsg");
+  const antall = Math.max(1, parseInt($("o-antall").value) || 1);
+  btn.disabled = true; btn.textContent = "Sender …"; msg.innerHTML = "";
+
+  const payload = {
+    action: "order",
+    navn: $("o-navn").value.trim(),
+    telefon: $("o-tlf").value.trim(),
+    antall: antall,
+    kommentar: $("o-kommentar").value.trim(),
+  };
+
+  if (STATE && STATE._demo) {
+    showOrderSuccess(antall);
+    return;
+  }
+  try {
+    const res = await postAction(payload);
+    if (res.ok) {
+      showOrderSuccess(antall, res);
+    } else {
+      msg.innerHTML = `<div class="msg err">${res.reason || "Beklager, vi rakk akkurat å bli utsolgt. Prøv ventelisten!"}</div>`;
+      btn.disabled = false; btn.textContent = "Send bestilling 🍪";
+      refresh();
+    }
+  } catch (err) {
+    msg.innerHTML = `<div class="msg err">Noe gikk galt. Sjekk nettforbindelsen og prøv igjen.</div>`;
+    btn.disabled = false; btn.textContent = "Send bestilling 🍪";
+  }
+});
+
+function showOrderSuccess(antall, res) {
+  const total = (res && res.total) || antall * CONFIG.PRIS_PER_PAKKE;
+  const vipps = (res && res.vipps) || (STATE && STATE.vipps) || "";
+  $("orderCard").innerHTML = `
+    <div class="success">
+      <div class="check">🎉</div>
+      <h2 class="section-title">Takk for bestillingen!</h2>
+      <p>Vi har mottatt bestillingen din på <strong>${antall} pakke${antall > 1 ? "r" : ""}</strong>.</p>
+      <div class="vipps-box">
+        Betal <span class="amount">${total} kr</span><br />
+        ${vipps ? "med Vipps til <strong>" + vipps + "</strong> ved henting" : "med Vipps ved henting"}
+      </div>
+      <p class="form-note">Vi tar kontakt om henting. Tusen takk – vi gleder oss til å bake til deg! 🍪</p>
+    </div>`;
+}
+
+/* ================= Venteliste ================= */
+$("waitlistForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if ($("waitlistForm").website.value) return;
+  const btn = $("waitSubmit");
+  const msg = $("waitMsg");
+  btn.disabled = true; btn.textContent = "Lagrer …"; msg.innerHTML = "";
+  const payload = { action: "waitlist", navn: $("w-navn").value.trim(), kontakt: $("w-kontakt").value.trim() };
+  const done = () => {
+    msg.innerHTML = `<div class="msg ok">Du er på listen! 🔔 Vi varsler deg så snart vi åpner igjen.</div>`;
+    $("waitlistForm").reset();
+    btn.disabled = false; btn.textContent = "Sett meg på ventelisten";
+  };
+  if (STATE && STATE._demo) return done();
+  try {
+    const res = await postAction(payload);
+    if (res.ok) done();
+    else { msg.innerHTML = `<div class="msg err">${res.reason || "Noe gikk galt, prøv igjen."}</div>`; btn.disabled = false; btn.textContent = "Sett meg på ventelisten"; }
+  } catch (err) {
+    msg.innerHTML = `<div class="msg err">Noe gikk galt. Prøv igjen.</div>`;
+    btn.disabled = false; btn.textContent = "Sett meg på ventelisten";
+  }
+});
+
+/* ================= Init ================= */
+async function refresh() {
+  STATE = await loadStatus();
+  applyContent(STATE);
+  renderStatus(STATE);
+}
+
+async function init() {
+  STATE = await loadStatus();
+  applyContent(STATE);
+  renderStatus(STATE);
+  const images = await loadImages();
+  renderGallery(images);
+  updateTotal();
+  setupReveal();
+}
+
+/* Fade-in ved scroll */
+function setupReveal() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); obs.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+}
+
+init();
+</script>
+</body>
+</html>
