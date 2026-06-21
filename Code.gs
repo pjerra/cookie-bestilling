@@ -14,7 +14,7 @@
  * ========================================================================= */
 
 // ============== KONFIG (fyll inn) ==============
-const SHEET_ID = '';          // La stå tom hvis scriptet er knyttet til selve regnearket. Ellers: regnearkets ID.
+const SHEET_ID = '';          // La stå TOM hvis du åpnet Apps Script fra regnearket (Utvidelser → Apps Script). Ellers: lim inn regnearkets ID eller hele URL-en.
 const BILDE_MAPPE_ID = '';    // <-- ID-en til Google Drive-mappen med bilder (delt "alle med lenken kan se").
 const VARSEL_EPOST = '';      // <-- e-post som varsles ved ny bestilling. Tom = ingen varsling.
 
@@ -195,7 +195,10 @@ function cleanCaption(filename) {
 //  HJELPEFUNKSJONER
 // =========================================================================
 function book() {
-  return SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  if (!SHEET_ID) return SpreadsheetApp.getActiveSpreadsheet();
+  // Godta både ren ID og full URL (henter ut ID-en fra .../d/<ID>/edit)
+  const m = String(SHEET_ID).match(/\/d\/([a-zA-Z0-9-_]+)/);
+  return SpreadsheetApp.openById(m ? m[1] : SHEET_ID);
 }
 
 function kv(sheetName) {

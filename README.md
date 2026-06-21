@@ -45,6 +45,7 @@ Google Apps Script (Code.gs)  ──►  Google-regneark (Innstillinger, Innhold
 1. I regnearket: **Utvidelser → Apps Script**.
 2. Slett alt i `Code.gs`, lim inn hele innholdet fra denne mappens `Code.gs`.
 3. Øverst i fila, fyll inn:
+   - La `SHEET_ID` stå **tom** (`''`) – scriptet er allerede knyttet til regnearket. (Ikke lim inn URL-en her.)
    - `BILDE_MAPPE_ID` = ID-en fra steg B3
    - `VARSEL_EPOST` = e-posten din (få varsel ved nye bestillinger). Kan stå tom.
 4. Lagre (💾).
