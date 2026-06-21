@@ -10,7 +10,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Milla's Chunky Cookies – Hjemmebakte cookies" />
 <meta property="og:description" content="Ferske, hjemmebakte cookies på bestilling. 2 cookies for 149 kr. Bestill mens det er åpent!" />
-<meta property="og:image" content="og-image.jpg" />
+<meta property="og:image" content="https://pjerra.github.io/cookie-bestilling/images/cookie-01.jpg" />
 <meta property="og:locale" content="nb_NO" />
 <meta name="twitter:card" content="summary_large_image" />
 
@@ -178,6 +178,15 @@
   .gallery figure:hover img{transform:scale(1.07);}
   .gallery figcaption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(40,24,14,.8));color:#fff;font-weight:700;font-size:.9rem;padding:1.4rem .8rem .6rem;}
 
+  /* ---------- Reels ---------- */
+  .reels{display:flex;gap:1rem;overflow-x:auto;padding:.5rem .2rem 1.2rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+  .reels::-webkit-scrollbar{height:8px;}
+  .reels::-webkit-scrollbar-track{background:transparent;}
+  .reels::-webkit-scrollbar-thumb{background:var(--caramel);border-radius:4px;}
+  .reel-card{flex:0 0 auto;width:270px;aspect-ratio:9/16;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow);background:#000;scroll-snap-align:center;}
+  .reel-card iframe{width:100%;height:100%;border:0;display:block;}
+  @media(max-width:480px){.reel-card{width:80vw;}}
+
   /* ---------- About ---------- */
   .about{display:grid;gap:1.5rem;grid-template-columns:1fr;align-items:center;}
   @media(min-width:720px){.about{grid-template-columns:1.1fr .9fr;}}
@@ -331,6 +340,15 @@
   </div>
 </section>
 
+<!-- ======================= REELS ======================= -->
+<section id="reels" style="background:var(--cream-2);">
+  <div class="wrap">
+    <h2 class="section-title reveal">Cookies i bevegelse 🎬</h2>
+    <p class="lead reveal">Ferske klipp rett fra Facebook. Sveip for å se flere 👉</p>
+    <div class="reels reveal" id="reels-row"></div>
+  </div>
+</section>
+
 <!-- ======================= FOOTER ======================= -->
 <footer>
   <div class="wrap">
@@ -359,6 +377,33 @@ const CONFIG = {
   PRIS_PER_PAKKE: 149,            // brukes som fallback hvis backend ikke svarer
 };
 
+/* ---- Ekte cookie-bilder (bygd inn i prosjektet, mappe /images) ---- */
+const LOCAL_IMAGES = [
+  "images/cookie-01.jpg", "images/cookie-02.jpg", "images/cookie-03.jpg", "images/cookie-04.jpg",
+  "images/cookie-05.jpg", "images/cookie-06.jpg", "images/cookie-07.jpg", "images/cookie-08.jpg",
+  "images/cookie-09.jpg", "images/cookie-10.jpg", "images/cookie-11.jpg", "images/cookie-12.jpg",
+  "images/cookie-13.jpg", "images/cookie-14.jpg", "images/cookie-15.jpg", "images/cookie-16.jpg",
+  "images/cookie-17.jpg",
+];
+
+/* ---- Facebook Reels (bygges inn med Facebooks offisielle video-plugin) ---- */
+const REELS = [
+  "https://www.facebook.com/reel/1335559158665361",
+  "https://www.facebook.com/reel/1613533587057889",
+  "https://www.facebook.com/reel/982142591111241",
+  "https://www.facebook.com/reel/1593355358973484",
+  "https://www.facebook.com/reel/1743146140036586",
+  "https://www.facebook.com/reel/1489259476023066",
+  "https://www.facebook.com/reel/26735219289439253",
+  "https://www.facebook.com/reel/1385255600110382",
+  "https://www.facebook.com/reel/1710837623256235",
+  "https://www.facebook.com/reel/1816853799677347",
+  "https://www.facebook.com/reel/1668960940898351",
+  "https://www.facebook.com/reel/4351830068390060",
+  "https://www.facebook.com/reel/1012200544805688",
+  "https://www.facebook.com/reel/2039493427003147",
+];
+
 /* ---- Demo-innhold (vises når backend ikke er koblet til) ---- */
 const DEMO = {
   status: "BESTILLING_ÅPEN",
@@ -375,12 +420,6 @@ const DEMO = {
     produkt_beskrivelse: "Hver cookie er bakt for hånd hjemme, i små partier, med gode råvarer og mye kjærlighet. Vi baker bare et begrenset antall om gangen – derfor selges det ofte ut. Sikre deg dine mens du kan!",
     facebook_url: "https://www.facebook.com/share/18V1gV2x8j/",
   },
-  _demoImages: [
-    "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80",
-    "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80",
-    "https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80",
-    "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600&q=80",
-  ],
 };
 
 const $ = (id) => document.getElementById(id);
@@ -413,13 +452,18 @@ async function loadStatus() {
   }
 }
 
+function toImageObjs(arr) {
+  return arr.map(function (u) { return typeof u === "string" ? { url: u, caption: "" } : u; });
+}
 async function loadImages() {
-  if (!CONFIG.APPS_SCRIPT_URL) return DEMO._demoImages.map((u) => ({ url: u, caption: "" }));
+  if (!CONFIG.APPS_SCRIPT_URL) return toImageObjs(LOCAL_IMAGES);
   try {
     const data = await getJSON("action=images");
-    return Array.isArray(data) ? data : (data.images || []);
+    const imgs = Array.isArray(data) ? data : (data.images || []);
+    // Faller tilbake til de innebygde bildene hvis Drive-mappen er tom
+    return imgs.length ? imgs : toImageObjs(LOCAL_IMAGES);
   } catch (e) {
-    return [];
+    return toImageObjs(LOCAL_IMAGES);
   }
 }
 
@@ -515,6 +559,25 @@ function renderGallery(images) {
       $("heroImg").src = img.url;
       $("aboutImg").src = images[Math.min(1, images.length - 1)].url;
     }
+  });
+}
+
+function renderReels() {
+  const row = $("reels-row");
+  if (!REELS || !REELS.length) { document.getElementById("reels").classList.add("hidden"); return; }
+  REELS.forEach(function (url) {
+    const card = document.createElement("div");
+    card.className = "reel-card";
+    const ifr = document.createElement("iframe");
+    ifr.src = "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(url) +
+      "&show_text=false&width=270&height=480";
+    ifr.loading = "lazy";
+    ifr.setAttribute("scrolling", "no");
+    ifr.setAttribute("frameborder", "0");
+    ifr.setAttribute("allowfullscreen", "true");
+    ifr.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share");
+    card.appendChild(ifr);
+    row.appendChild(card);
   });
 }
 
@@ -633,6 +696,7 @@ async function init() {
   renderStatus(STATE);
   const images = await loadImages();
   renderGallery(images);
+  renderReels();
   updateTotal();
   setupReveal();
 }

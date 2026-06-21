@@ -118,6 +118,16 @@ Dra nye bilder inn i **Drive-bildemappen** (eller slett gamle). De vises i galle
 automatisk (kan ta opptil et par minutter pga. mellomlagring). Vil du ha bildetekst, gi
 filen et passende navn (f.eks. «Sjokolade og havsalt.jpg»).
 
+> Det ligger allerede **ekte cookie-bilder** i mappen `images/` i prosjektet. Disse brukes
+> som galleri/standard, og vises også hvis Drive-mappen er tom. Galleriet bytter automatisk
+> til Drive-bildene så snart du legger noen der.
+
+### Facebook Reels 🎬
+Siden viser en «Cookies i bevegelse»-seksjon med Reels bygd inn fra Facebook. Vil du legge
+til/fjerne reels, rediger listen `REELS` øverst i `<script>`-delen av `index.html` (lim inn
+delingslenken til hver reel). Bygger på Facebooks offisielle video-plugin – noen reels kan
+være skjult hvis personvernet på reelen ikke er «offentlig».
+
 ### Se bestillinger
 Fanen **Bestillinger** fylles automatisk. Får du varsel-e-post (hvis satt opp), ser du hver
 nye bestilling med en gang. **Venteliste**-fanen samler dem som vil varsles.
