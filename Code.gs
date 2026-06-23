@@ -266,6 +266,9 @@ function settUppRegneark() {
   // --- Venteliste ---
   ensureSheet(ss, ARK.venteliste, ['Tidspunkt', 'Navn', 'Kontakt']);
 
+  // --- Bakeliste (lettlest oversikt, oppdateres automatisk) ---
+  lagBakeliste(ss);
+
   SpreadsheetApp.getActiveSpreadsheet().toast('Oppsett ferdig! Fanene er klare.', "Milla's Chunky Cookies", 5);
 }
 
@@ -290,4 +293,36 @@ function seedKeyValues(sheet, pairs) {
   pairs.forEach(function (p) {
     if (!existing[p[0]]) sheet.appendRow(p);
   });
+}
+
+// =========================================================================
+//  BAKELISTE  – lettlest oversikt over bestillinger (oppdateres automatisk)
+//  Kan kjøres direkte fra editoren, eller blir laget av settUppRegneark().
+// =========================================================================
+function lagBakeliste(ss) {
+  ss = ss || book();
+  let sh = ss.getSheetByName('Bakeliste');
+  if (!sh) sh = ss.insertSheet('Bakeliste');
+  sh.clear();
+
+  sh.getRange('A1').setValue('🍪 BAKELISTE').setFontSize(16).setFontWeight('bold');
+  sh.getRange('A2').setValue('Pakker å bake:').setFontWeight('bold');
+  sh.getRange('B2').setFormula('=SUM(Bestillinger!D2:D)');
+  sh.getRange('A3').setValue('Cookies totalt:').setFontWeight('bold');
+  sh.getRange('B3').setFormula('=SUM(Bestillinger!D2:D)*2');
+  sh.getRange('A4').setValue('Antall bestillinger:').setFontWeight('bold');
+  sh.getRange('B4').setFormula('=COUNTA(Bestillinger!B2:B)');
+
+  sh.getRange('A6:D6')
+    .setValues([['Navn', 'Antall pakker', 'Telefon', 'Kommentar']])
+    .setFontWeight('bold').setBackground('#F4E9D8');
+  sh.getRange('A7').setFormula(
+    '=IFERROR(QUERY(Bestillinger!A2:F, "select B, D, C, E where B is not null order by A"), "Ingen bestillinger ennå")'
+  );
+
+  sh.setColumnWidth(1, 170);
+  sh.setColumnWidth(2, 110);
+  sh.setColumnWidth(3, 130);
+  sh.setColumnWidth(4, 280);
+  sh.setFrozenRows(6);
 }

@@ -133,6 +133,12 @@ være skjult hvis personvernet på reelen ikke er «offentlig».
 Fanen **Bestillinger** fylles automatisk. Får du varsel-e-post (hvis satt opp), ser du hver
 nye bestilling med en gang. **Venteliste**-fanen samler dem som vil varsles.
 
+### 🍪 Bakeliste (når du skal bake)
+Fanen **Bakeliste** gir en lettlest oversikt som **oppdaterer seg selv**: totalt antall
+pakker/cookies å bake øverst, og en ren liste under (Navn · Antall · Telefon · Kommentar).
+Funker også i Google Sheets-appen på mobil. Lages av `settUppRegneark()`, eller kjør
+funksjonen `lagBakeliste` i Apps Script for å (gjen)opprette den.
+
 > **Kjøre nytt parti?** Mange velger å tømme/arkivere gamle rader i **Bestillinger** før de
 > åpner igjen, så «X pakker igjen» teller fra null for det nye partiet.
 
